@@ -9,7 +9,7 @@ a big update of JShell - a tool to get a JavaScript shell with XSS by s0med3v. J
 #### Set the local port number for listening and generating payload (By default, it will be set to 4848):  `-p`
 #### Set the local source address for generating payload (JSshell will detect your IP address by deault):  `-s`
 #### Set timeout for shell connection (if the user exit page, the shell will be pause, and if your set the timeout, after a while without response, the shell will automatically close):  `-w`
-#### Execute a command when got the shell:  `c`
+#### Execute a command when got the shell:  `-c`
 
 #### Example usages:
 - `js.py`
@@ -18,7 +18,7 @@ a big update of JShell - a tool to get a JavaScript shell with XSS by s0med3v. J
 - `js.py -s 48.586.1.23 -g`
 - `js.py -c "alert(document.cookie)" -w 10`
 
-#### Running JSshell example:
+#### An example for running JSshell:
 This is an example for step-by-step to exploit remote XSS using JSshell.
 
 First we will generate a reverse JS shell payload and set the shell timeout is 20 seconds:
