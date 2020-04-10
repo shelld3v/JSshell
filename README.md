@@ -24,11 +24,11 @@ This is an example for step-by-step to exploit remote XSS using JSshell.
 First we will generate a reverse JS shell payload and set the shell timeout is 20 seconds:
 
 ```
-# whoami
+~# whoami
 root
-# ls
+~# ls
 README.md   js.py
-# python3 js.py -g -w 20
+~# python3 js.py -g -w 20
     __
   |(_  _ |_  _  |  |
 \_|__)_> | |(/_ |  |
@@ -85,10 +85,11 @@ And the browser print the user cookies:  `JSESSION=3bda8...`
 
 ```
 $ exit
-# whoami
+~# whoami
 root
-# pwd
+~# pwd
 /home/shelld3v
+~#
 ```
 
 And we quited!
