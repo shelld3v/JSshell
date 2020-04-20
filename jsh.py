@@ -71,7 +71,7 @@ Connection: close
         if secs != 0:
             s.settimeout(secs)
         buffer = input('%s$ %s' % (blue, white))
-        s.listen(0)
+        s.listen(2)
         try:
             c, a = s.accept()
             data = c.recv(1024)
@@ -85,7 +85,7 @@ Connection: close
                     print('Could not get the source domain because the referer has been disabled')
             elif buffer == 'pwd':
                 try:
-                    print('/%s' % path)
+                    print(path)
                 except:
                     print('Could not get the source path because the referer has been disabled')
             elif buffer == 'help':
@@ -113,7 +113,7 @@ def main():
         s.bind(('0.0.0.0', port))
     except socket.error as msg:
         print("Can't grab 0.0.0.0:%s with bind: Try a bigger local port number" % port)
-    s.listen(0)
+    s.listen(2)
     
     try:
         c, addr = s.accept()
