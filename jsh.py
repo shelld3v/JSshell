@@ -70,7 +70,7 @@ Connection: close
         s.bind(('0.0.0.0', port))
         if secs != 0:
             s.settimeout(secs)
-        buffer = input('%s$ %s' % (blue, white))
+        buffer = input('%sjs-2.0%s$ %s' % (red, white, white))
         s.listen(2)
         try:
             c, a = s.accept()
