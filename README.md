@@ -72,7 +72,7 @@ Now let's execute some commands:
 
 ```
 $ var test = 'hacked'
-$ alert(hacked)
+$ alert(test)
 $
 ```
 And the browser got an alert:  `hacked`
