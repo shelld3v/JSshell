@@ -18,7 +18,7 @@ banner = '''%s    __
 \_|__)_> | |(/_ |  |
                       v2.0
 ''' % red
-hp = '''JSshell using javascript code as shell commands. Also supports some commands:
+hp = '''JSshell uses javascript code as shell commands. Also supports some commands:
 help                  This help
 domain                The source domain
 pwd                   The source path
@@ -90,7 +90,7 @@ def shell():
                     print('Could not get the source domain because the referer has been disabled')
             elif buffer == 'pwd':
                 try:
-                    print(path)
+                    print(pth)
                 except:
                     print('Could not get the source path because the referer has been disabled')
             elif buffer == 'help':
@@ -134,6 +134,8 @@ def main():
                 referer = line.lower().replace('referer: ', '')
                 domain = referer.split('/')[2]
                 pth = '/'.join(referer.split('/')[3:])
+                if pth == '\r':
+                    pth = '/'
         if len(cmd):
             c.send(form + cmd.encode())
             print('%sjs-2.0%s$ %s' % (red, white, cmd))
