@@ -98,6 +98,7 @@ def shell():
                               
             c.send(form + buffer.encode())
             c.close()
+            s.close()
         except KeyboardInterrupt:
             if sys.platform == 'win32':
                 print('\nControl-C')
