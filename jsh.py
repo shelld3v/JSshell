@@ -97,7 +97,9 @@ def shell():
                 print(hp)
                               
             c.send(form + buffer.encode())
+            c.shutdown(socket.SHUT_RDWR)
             c.close()
+            s.shutdown(socket.SHUT_RDWR)
             s.close()
         except KeyboardInterrupt:
             if sys.platform == 'win32':
