@@ -79,7 +79,7 @@ def shell():
         buffer = input('%sjs-2.0%s$ ' % (red, white))
         if buffer == 'exit' or buffer == 'quit':
             break
-        s.listen(2)
+        s.listen(0)
         try:
             c, a = s.accept()
             data = c.recv(1024)
@@ -97,9 +97,9 @@ def shell():
                 print(hp)
                               
             c.send(form + buffer.encode())
-            c.shutdown(socket.SHUT_WR)
+            c.shutdown(socket.SHUT_RDWR)
             c.close()
-            s.shutdown(socket.SHUT_WR)
+            s.shutdown(socket.SHUT_RDWR)
             s.close()
         except KeyboardInterrupt:
             if sys.platform == 'win32':
@@ -143,7 +143,7 @@ def main():
             c.send(form + cmd.encode())
             print('%sjs-2.0%s$ %s' % (red, white, cmd))
         c.close()
-        s.shutdown(socket.SHUT_WR)
+        s.shutdown(socket.SHUT_RDWR)
         s.close()
         shell()
     else:
