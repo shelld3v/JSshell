@@ -97,9 +97,9 @@ def shell():
                 print(hp)
                               
             c.send(form + buffer.encode())
-            c.shutdown(socket.SHUT_RDWR)
+            c.shutdown(socket.SHUT_WR)
             c.close()
-            s.shutdown(socket.SHUT_RDWR)
+            s.shutdown(socket.SHUT_WR)
             s.close()
         except KeyboardInterrupt:
             if sys.platform == 'win32':
@@ -143,6 +143,7 @@ def main():
             c.send(form + cmd.encode())
             print('%sjs-2.0%s$ %s' % (red, white, cmd))
         c.close()
+        s.shutdown(socket.SHUT_WR)
         s.close()
         shell()
     else:
