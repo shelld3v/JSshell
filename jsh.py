@@ -144,10 +144,13 @@ def main():
         if len(cmd):
             c.send(form + cmd.encode())
             print('%sjs-2.0%s$ %s' % (red, white, cmd))
+            
+        c.shutdown(socket.SHUT_RDWR)
         c.close()
         s.shutdown(socket.SHUT_RDWR)
         s.close()
         shell()
+        
     else:
         s.close()
         main()
