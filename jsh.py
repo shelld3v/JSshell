@@ -56,12 +56,6 @@ payload = '''
 
 ''' % (blue, host, port, white, blue, host, port, white, blue, host, port)
 
-
-print(banner)
-if gene == True:
-    print('%sPayloads:  %s' % (white, payload))
-    
-print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
         
 form = b'''HTTP/1.1 200 OK
 Content-Type: application/javascript
@@ -121,6 +115,14 @@ def main():
         s.bind(('0.0.0.0', port))
     except socket.error as msg:
         print("Can't grab 0.0.0.0:%s with bind: %s" % (port, msg))
+        quit()
+        
+    print(banner)
+    if gene == True:
+        print('%sPayloads:  %s' % (white, payload))
+    
+    print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
+    
     s.listen(2)
     
     try:
