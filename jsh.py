@@ -120,7 +120,7 @@ def main():
     try:
         s.bind(('0.0.0.0', port))
     except socket.error as msg:
-        print("Can't grab 0.0.0.0:%s with bind: Try a bigger local port number" % port)
+        print("Can't grab 0.0.0.0:%s with bind: %s" % (port, msg))
     s.listen(2)
     
     try:
