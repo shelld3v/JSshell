@@ -67,13 +67,16 @@ Connection: close
 def shell():
     while 1:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind(('0.0.0.0', port))
+        
         if secs != 0:
             s.settimeout(secs)
         buffer = input('%sjs-2.0%s$ ' % (red, white))
         if buffer == 'exit' or buffer == 'quit':
             break
+            
+        s.bind(('0.0.0.0', port))
         s.listen(0)
+        
         try:
             c, a = s.accept()
             data = c.recv(1024)
