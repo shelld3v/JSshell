@@ -1,8 +1,23 @@
-# JSshell (version 2.0)
+# JSshell (version 2.9)
 JSshell - a JavaScript reverse shell. This using for exploit XSS remotely, help to find blind XSS, ...
 
 This tool works for both Unix and Windows operating system and it can running with both Python 2 and Python 3. This is 
 a big update of JShell - a tool to get a JavaScript shell with XSS by s0med3v. JSshell also doesn't require Netcat (different from other javascript shells).
+
+### New in JSshell version 2.9
+Updated in the new version of JShell 2.9:
+
+- New JSshell command: `cookie` -> allows to view the cookies of the current user who established the shell
+- Support javascript function:
+```sh
+js-2.9$ function new() {
+>         new = 'New update: Support javascript function';
+>         confirm(new);
+>         }
+js-2.9$ 
+js-2.9$ new()
+```
+- Fixed some bugs
 
 # Usage
 #### Generate JS reverse shell payload:  `-g`
@@ -96,4 +111,5 @@ And we quited!
 
 
 # Author
-This created by shelld3v, hacking at HackOne and Bugcrowd with a secret account! This tool is inspired by JShell (s0med3v), using the BruteLogic payload.
+This created by shelld3v, hacking at HackerOne and Bugcrowd! This tool is inspired by the BruteLogic payload.
+
