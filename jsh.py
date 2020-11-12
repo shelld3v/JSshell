@@ -71,7 +71,7 @@ def shell():
         
         if secs != 0:
             s.settimeout(secs)
-        buffer = input('%sjs-2.9%s$ ' % (red, white))
+        buffer = input('%s>>> ' % (red, white))
         if buffer == 'exit' or buffer == 'quit':
             break
         try:
