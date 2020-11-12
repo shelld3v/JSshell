@@ -165,7 +165,7 @@ def main():
                 cookie = line.lower().replace('cookie: ', '')
         if len(cmd):
             c.send(form + cmd.encode())
-            print('%sjs-2.9%s$ %s' % (red, white, cmd))
+            print('%s>>>%s %s' % (red, white, cmd))
             
         c.shutdown(socket.SHUT_RDWR)
         c.close()
