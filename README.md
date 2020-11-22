@@ -8,12 +8,12 @@ a big update of JShell - a tool to get a JavaScript shell with XSS by s0med3v. J
 Updated in the new version of JShell 2.9:
 
 - New JSshell command: `cookie` -> allows to view the cookies of the current user who established the shell
-- Support javascript function:
+- Support 1-level-depth javascript functions:
 ```sh
 js-2.9$ function new() {
->         new = 'New update: Support javascript function';
->         confirm(new);
->         }
+          new = 'New update: Support javascript function';
+          confirm(new);
+          }
 js-2.9$ 
 js-2.9$ new()
 ```
