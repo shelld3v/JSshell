@@ -161,7 +161,7 @@ def main():
         main()
         
     if 'Accept' in resp and 'HTTP' in resp:
-        print ('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
+        print('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
         for line in resp.split('\n'):
             if 'referer' in line.lower():
                 referer = line.lower().replace('referer: ', '')
