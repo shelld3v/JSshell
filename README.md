@@ -1,21 +1,23 @@
-# JSshell (version 2.9)
+# JSshell (version 3.1)
 JSshell - a JavaScript reverse shell. This is used to execute JS code remotely, exploit blind XSS, ...
 
 This tool works for both Unix and Windows operating systems, and it can run on both Python 2 + Python 3. This is 
 a big update of JShell - a tool to get a JavaScript shell with XSS by s0med3v. JSshell also doesn't require Netcat (different from JShell).
 
-### New in JSshell version 2.9
-Updated in the new version of JShell 2.9:
+### New in JSshell version 3.1
+Updated in the new version of JShell 3.1:
 
-- New JSshell command: `cookie` -> allows to view the cookies of the current user who established the shell
-- Support 1-level-depth javascript functions:
+- New JSshell command: `snippet` -> allows to write a snippet of javascript code
+
 ```sh
-js-2.9$ function new() {
-          new = 'New update: Support javascript function';
-          confirm(new);
-          }
-js-2.9$ 
-js-2.9$ new()
+>>> snippet
+Use CTRL+C to finish the snippet
+
+function new() {
+    new = 'New update: Support javascript snippet =)';
+    confirm(new)
+}
+>>> 
 ```
 - Fixed some bugs
 
