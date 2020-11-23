@@ -19,6 +19,8 @@ function new() {
 }
 >>> 
 ```
+- Quiet mode (for professionals)
+- Added `<body>` reverse shell payload
 - Fixed some bugs
 
 # Usage
