@@ -23,6 +23,7 @@ help                  This help
 domain                The source domain
 pwd                   The source path
 cookie                The user cookie
+snippet               Write a snippet of code
 exit, quit            Exit the JS shell'''
 
 
@@ -43,10 +44,10 @@ if not len(host):
 try:
     port = int(format(args.port))
     if not 0 <= port <= 65535:
-        print('Invalid port %s' % port)
+        print('Invalid port: %s' % port)
         quit
 except:
-    print('Invalid port %s' % port)
+    print('Invalid port: %s' % port)
     quit
 
 if args.quiet:
@@ -96,12 +97,26 @@ def shell():
             pass
             
         s.bind(('0.0.0.0', port))
-        s.listen(2)
+        s.listen(0)
         
         try:
             c, a = s.accept()
-            data = c.recv(1024)
-            if buffer == 'domain':
+            data = c.recv(2048)
+
+            if buffer == 'help':
+                print(hp)
+            elif buffer = 'snippet':
+                try:
+                    print('Use CTRL+C to finish the snippet')
+                    print()
+
+                    buffer = ''
+                    while 1:
+                        buffer += input()
+                        buffer += '\n'
+                except:
+                    pass
+            elif buffer == 'domain':
                 try:
                     print(domain)
                 except:
@@ -111,8 +126,6 @@ def shell():
                     print(pth)
                 except:
                     print('Could not get the source path because the referer has been disabled')
-            elif buffer == 'help':
-                print(hp)
             elif buffer == 'cookie':
                 try:
                     print(cookie)
