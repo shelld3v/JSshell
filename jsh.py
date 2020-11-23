@@ -16,7 +16,7 @@ if sys.version_info < (3, 0):
 banner = '''%s    __              
   |(_  _ |_  _  |  |
 \_|__)_> | |(/_ |  |
-                      v2.9
+                      v3.1
 ''' % red
 hp = '''JSshell uses javascript code as shell commands. Also supports some commands:
 help                  This help
@@ -27,7 +27,7 @@ snippet               Write a snippet of code
 exit, quit            Exit the JS shell'''
 
 
-parser = argparse.ArgumentParser(description='JSshell 2.9: javascript reverse shell')
+parser = argparse.ArgumentParser(description='JSshell 3.1: javascript reverse shell')
 parser.add_argument('-p', help='local port number (default: 4848)', dest='port', default=4848)
 parser.add_argument('-s', help='local sorce address', dest='host', default='')
 parser.add_argument('-g', help='generate JS reverse shell payload', dest='gene', action='store_true')
