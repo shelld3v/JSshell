@@ -17,6 +17,8 @@ function new() {
     new = 'New update: Support javascript snippet =)';
     confirm(new)
 }
+
+new()
 >>> 
 ```
 - Quiet mode (for professionals)
