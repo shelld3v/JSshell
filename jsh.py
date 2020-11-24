@@ -106,7 +106,7 @@ def shell():
 
             if buffer == 'help':
                 print(hp)
-            elif buffer = 'snippet':
+            elif buffer == 'snippet':
                 try:
                     print('Use CTRL+C to finish the snippet')
                     print()
