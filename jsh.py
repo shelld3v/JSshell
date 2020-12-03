@@ -153,6 +153,8 @@ def main():
     global domain
     global pth
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
     try:
         s.bind(('0.0.0.0', port))
     except socket.error as msg:
