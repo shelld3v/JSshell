@@ -1,4 +1,7 @@
 # JSshell (version 3.1)
+
+![JSshell](https://user-images.githubusercontent.com/43073671/101387832-ec9f5380-38b6-11eb-9933-db5399cf0319.png)
+
 JSshell - a JavaScript reverse shell. This is used to execute JS code remotely, exploit blind XSS, ...
 
 This tool works for both Unix and Windows operating systems, and it can run on both Python 2 + Python 3. This is 
