@@ -1,4 +1,4 @@
-# JSshell
+# JSshell - version 3.1
 
 ![JSshell](https://user-images.githubusercontent.com/43073671/101387832-ec9f5380-38b6-11eb-9933-db5399cf0319.png)
 
