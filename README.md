@@ -14,7 +14,7 @@ Updated in the new version of JShell 3.1:
 
 ```sh
 >>> snippet
-Use CTRL+C to finish the snippet
+Use CTRL+D to finish the snippet
 
 function new() {
     new = 'New update: Support javascript snippet =)';
