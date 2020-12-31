@@ -107,16 +107,10 @@ def shell():
             if buffer == 'help':
                 print(hp)
             elif buffer == 'snippet':
-                try:
-                    print('Use CTRL+C to finish the snippet')
-                    print()
+                print('Use CTRL+D to finish the snippet')
+                print()
 
-                    buffer = ''
-                    while 1:
-                        buffer += input()
-                        buffer += '\n'
-                except:
-                    pass
+                buffer = sys.stdin.read()
             elif buffer == 'domain':
                 try:
                     print(domain)
