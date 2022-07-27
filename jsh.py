@@ -30,7 +30,7 @@ exit, quit            Exit the JS shell'''
 
 parser = argparse.ArgumentParser(description='JSshell 3.1: javascript reverse shell')
 parser.add_argument('-p', help='local port number (default: 4848)', dest='port', default=4848)
-parser.add_argument('-s', help='local sorce address', dest='host', default='')
+parser.add_argument('-s', help='local source address', dest='host', default='')
 parser.add_argument('-g', help='generate JS reverse shell payload', dest='gene', action='store_true')
 parser.add_argument('-c', help='command to execute after got shell', dest='command', default=str())
 parser.add_argument('-w', help='timeout for shell connection', dest='secs', type=float, default=0)
