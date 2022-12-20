@@ -175,16 +175,19 @@ def main():
     try:
         c, addr = s.accept()
         resp = ""
-        while b:
+        while True:
             b = c.recv(1024).decode()
+            if not b:
+                break
             resp += b
     except KeyboardInterrupt:
         if sys.platform == 'win32':
                 print('\nControl-C')
         exit()
-    except:
+    except(e):
+        print(e)
         s.close()
-        main()
+        
 
     if 'Accept' in resp and 'HTTP' in resp:
         print('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
