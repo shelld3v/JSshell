@@ -36,7 +36,7 @@ parser.add_argument('-t', help='target to be used in payloads, default: [host]:[
 parser.add_argument('-c', help='command to execute after get the shell', dest='command', default=str())
 parser.add_argument('-w', help='timeout for shell connection', dest='secs', type=float, default=0)
 parser.add_argument('-q', help='quiet mode', dest='quiet', action='store_true')
-
+parser.add_argument('-b', help='buffer size (default:1024)', dest='buffer', default=1024)
 
 args = parser.parse_args()
 
@@ -45,6 +45,7 @@ target = args.target
 gene = args.gene
 cmd = args.command
 secs = args.secs
+buffersize = args.buffer 
     
 try:
     port = int(format(args.port))
@@ -174,7 +175,7 @@ def main():
 
     try:
         c, addr = s.accept()
-        resp = c.recv(1024).decode()
+        resp = c.recv(int(buffersize)).decode()
     except KeyboardInterrupt:
         if sys.platform == 'win32':
                 print('\nControl-C')
